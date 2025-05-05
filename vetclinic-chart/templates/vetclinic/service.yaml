@@ -1,0 +1,19 @@
+{{- if .Values.vetclinic.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-vetclinic
+  labels:
+    app: {{ .Release.Name }}-vetclinic
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+spec:
+  type: {{ .Values.vetclinic.service.type }}
+  ports:
+    - port: {{ .Values.vetclinic.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ .Release.Name }}-vetclinic
+{{- end }}

@@ -14,6 +14,7 @@ import com.example.authvetclinic.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,9 +38,9 @@ public class AuthViewController {
     private OwnerMapper ownerMapper;
 
     @GetMapping("/login")
-    public String showLoginPage(Model model) {
-        model.addAttribute("loginRequest", new LoginRequest());
-        return "login"; // src/main/resources/templates/login.html
+    public ResponseEntity<String> showLoginPage() {
+        System.out.println("FACEM LOGIN!");
+        return ResponseEntity.ok("LOGIN PAGE");
     }
 
     @PostMapping("/login")

@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1  # Add apiVersion
+kind: Ingress                     # Add kind
+metadata:
+  name: vetclinic-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: vetclinic.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: vetclinic-vetclinic
+                port:
+                  number: 8081
+    - host: auth.vetclinic.local
+      http:
+        paths:
+          - path: /auth/login
+            pathType: Exact
+            backend:
+              service:
+                name: vetclinic-auth
+                port:
+                  number: 8082
+          - path: /auth/register
+            pathType: Exact
+            backend:
+              service:
+                name: vetclinic-auth
+                port:
+                  number: 8082

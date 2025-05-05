@@ -1,0 +1,34 @@
+{{- if .Values.vetclinic.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-vetclinic
+  labels:
+    app: {{ .Release.Name }}-vetclinic
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.vetclinic.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-vetclinic
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-vetclinic
+    spec:
+      containers:
+        - name: vetclinic
+          image: "{{ .Values.vetclinic.image.repository }}:{{ .Values.vetclinic.image.tag }}"
+          imagePullPolicy: {{ .Values.vetclinic.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.vetclinic.service.port }}
+              name: http
+          env:
+        {{- range $key, $val := .Values.vetclinic.env }}
+            - name: {{ $key }}
+              value: {{ tpl $val $ | quote }}
+        {{- end }}
+          resources:
+          {{- toYaml .Values.vetclinic.resources | nindent 10 }}
+{{- end }}

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-auth-vetclinic
+  labels:
+    app: {{ .Release.Name }}-auth-vetclinic
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.authVetclinic.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-auth-vetclinic
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-auth-vetclinic
+        release: vetclinic
+    spec:
+      containers:
+        - name: auth-vetclinic
+          image: "{{ .Values.authVetclinic.image.repository }}:{{ .Values.authVetclinic.image.tag }}"
+          imagePullPolicy: {{ .Values.authVetclinic.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.authVetclinic.service.port }}
+              name: http
+          env:
+            {{- range $key, $val := .Values.authVetclinic.env }}
+            - name: {{ $key }}
+              value: {{ tpl $val $ | quote }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.authVetclinic.resources | nindent 10 }}
