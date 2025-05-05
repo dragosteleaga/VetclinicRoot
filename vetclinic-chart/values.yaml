@@ -25,7 +25,7 @@ vetclinic:
   enabled: true
   image:
     repository: dragosteleaga/vetclinic
-    tag: latest
+    tag: 1.2
     pullPolicy: Always
   replicaCount: 1
   service:
@@ -51,7 +51,7 @@ authVetclinic:
   enabled: true
   image:
     repository: dragosteleaga/authvetclinic
-    tag: 1.1
+    tag: 1.4
     pullPolicy: Always
   replicaCount: 1
   service:

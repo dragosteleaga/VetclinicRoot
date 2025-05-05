@@ -107,7 +107,7 @@
                     const token = await response.text();
                     sessionStorage.setItem("jwtToken2", token);
                     document.cookie = "jwtToken2=" + token + "; path=/"
-                    urlToGetRole="http://localhost:8081/api/users/getRoleByEmail/"+email
+                    urlToGetRole="http://vetclinic.local/api/users/getRoleByEmail/"+email
                     const responseForRole=await fetch(urlToGetRole, {
                         method: "GET",
                         headers: {
@@ -117,9 +117,9 @@
                     const role = JSON.parse(await responseForRole.text()); // removes the extra quotes
                     console.log(role)
                     if (role==="OWNER"){
-                    window.location.href = "http://localhost:8081/owner/dashboard";
+                    window.location.href = "http://vetclinic.local:8081/owner/dashboard";
                     }else  if (role==="VETERINARIAN"){
-                        window.location.href = "http://localhost:8081/vet/dashboard";
+                        window.location.href = "http://vetclinic.local:8081/vet/dashboard";
                     }
                 } else {
                     const errorData = await response.json();

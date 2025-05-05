@@ -38,9 +38,9 @@ public class AuthViewController {
     private OwnerMapper ownerMapper;
 
     @GetMapping("/login")
-    public ResponseEntity<String> showLoginPage() {
-        System.out.println("FACEM LOGIN!");
-        return ResponseEntity.ok("LOGIN PAGE");
+    public String showLoginPage(Model model) {
+        model.addAttribute("loginRequest", new LoginRequest());
+        return "login"; // src/main/resources/templates/login.html
     }
 
     @PostMapping("/login")
