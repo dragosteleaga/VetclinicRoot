@@ -106,10 +106,11 @@
                 if (response.ok) {
                     const token = await response.text();
                     sessionStorage.setItem("jwtToken2", token);
-                    document.cookie = "jwtToken2=" + token + "; path=/"
+                    document.cookie = "jwtToken2=" + token + "; path=/; domain=vetclinic.local";
                     urlToGetRole="http://vetclinic.local/api/users/getRoleByEmail/"+email
                     const responseForRole=await fetch(urlToGetRole, {
                         method: "GET",
+                        credentials: "include", // ✅ tells browser to send cookies
                         headers: {
                             "Content-Type": "application/json"
                         },
@@ -117,9 +118,9 @@
                     const role = JSON.parse(await responseForRole.text()); // removes the extra quotes
                     console.log(role)
                     if (role==="OWNER"){
-                    window.location.href = "http://vetclinic.local:8081/owner/dashboard";
+                    window.location.href = "http://vetclinic.local/owner/dashboard";
                     }else  if (role==="VETERINARIAN"){
-                        window.location.href = "http://vetclinic.local:8081/vet/dashboard";
+                        window.location.href = "http://vetclinic.local/vet/dashboard";
                     }
                 } else {
                     const errorData = await response.json();
