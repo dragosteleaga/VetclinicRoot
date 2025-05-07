@@ -30,4 +30,4 @@ spec:
               value: {{ tpl $val $ | quote }}
             {{- end }}
           resources:
-            {{- toYaml .Values.authVetclinic.resources | nindent 10 }}
+            {{- toYaml .Values.authVetclinic.resources | nindent 12 }}
